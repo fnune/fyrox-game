@@ -1,17 +1,21 @@
 use fyrox::{
     asset::manager::ResourceManager,
-    core::algebra::{UnitQuaternion, Vector3},
+    core::{
+        algebra::{UnitQuaternion, Vector3},
+        pool::Handle,
+    },
     resource::texture::{Texture, TextureWrapMode},
     scene::{
         base::BaseBuilder,
         camera::{CameraBuilder, SkyBox, SkyBoxBuilder},
         graph::Graph,
+        node::Node,
         pivot::PivotBuilder,
         transform::TransformBuilder,
     },
 };
 
-pub async fn create_camera(graph: &mut Graph, resource_manager: ResourceManager) {
+pub async fn create_camera(graph: &mut Graph, resource_manager: ResourceManager) -> Handle<Node> {
     let camera = CameraBuilder::new(
         BaseBuilder::new().with_local_transform(
             TransformBuilder::new()
@@ -37,6 +41,8 @@ pub async fn create_camera(graph: &mut Graph, resource_manager: ResourceManager)
             .with_children(&[camera]),
     )
     .build(graph);
+
+    camera
 }
 
 async fn create_skybox(resource_manager: ResourceManager) -> SkyBox {

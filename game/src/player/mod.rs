@@ -5,12 +5,15 @@ use fyrox::{
     scene::{node::Node, Scene},
 };
 
-use self::camera::create_camera;
+use self::{camera::create_camera, movement::MovementController};
 
 mod camera;
+mod movement;
 
 pub struct Player {
-    model: Handle<Node>,
+    _model: Handle<Node>,
+    pub camera: Handle<Node>,
+    pub movement: MovementController,
 }
 
 impl Player {
@@ -26,9 +29,13 @@ impl Player {
             .set_position(Vector3::new(0.0, 0.0, 0.0))
             .set_scale(Vector3::new(0.02, 0.02, 0.02));
 
-        create_camera(&mut scene.graph, resource_manager).await;
+        let camera = create_camera(&mut scene.graph, resource_manager).await;
 
-        Self { model }
+        Self {
+            _model: model,
+            camera,
+            movement: MovementController::new(),
+        }
     }
 
     pub fn update(&mut self, _scene: &mut Scene) {}

@@ -1,7 +1,7 @@
 //! Executor with your game connected to it as a plugin.
+use fyrox::core::wasm_bindgen::{self, prelude::*};
 use fyrox::engine::executor::Executor;
 use game::GameConstructor;
-use fyrox::core::wasm_bindgen::{self, prelude::*};
 
 #[wasm_bindgen]
 extern "C" {
